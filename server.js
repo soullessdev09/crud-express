@@ -121,7 +121,7 @@ app.post("/catalogue-multi", async (req, res) => {
 
 app.post("/catalogue-test", async (req, res) => {
   try {
-    if (req.body.length !== 0) {
+    if (req.body.length) {
       res.send("insert many");
     } else {
       res.send("satu doang");
