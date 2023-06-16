@@ -7,7 +7,9 @@ const Common = require("./models/commonDataModel");
 const cors = require("cors");
 const app = express();
 const mongo_url =
-  "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority";
+  "mongodb+srv://kreduit:XDMgV9rww96wiKSH@cluster0.adkgvov.mongodb.net/?retryWrites=true&w=majority"; //url kreduit
+// const mongo_url =
+//   "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority"; //url nabil
 
 app.use(express.json());
 app.use(cors());
