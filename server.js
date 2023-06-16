@@ -203,14 +203,6 @@ app.delete("/banner", async (req, res) => {
 });
 
 //Common Data API
-// app.get("/commons", async (req, res) => {
-//   try {
-//     const data = await Common.find({});
-//     res.status(200).json(data);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
 
 app.get("/common", async (req, res) => {
   try {
@@ -222,6 +214,15 @@ app.get("/common", async (req, res) => {
   }
 });
 
+// app.get("/commons", async (req, res) => {
+//   try {
+//     const data = await Common.find({});
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
 // app.post("/common", async (req, res) => {
 //   try {
 //     const data = await Common.create(req.body);
@@ -230,22 +231,6 @@ app.get("/common", async (req, res) => {
 //     res.status(500).json({ message: err.message });
 //   }
 // });
-
-app.put("/common", async (req, res) => {
-  try {
-    const id = req.query.id;
-    const data = await Common.findByIdAndUpdate(id, req.body);
-    if (!data) {
-      return res
-        .status(404)
-        .json({ message: `Common with ID: ${id} not found in database` });
-    }
-    const updatedData = await Common.findById(id);
-    res.status(200).json(updatedData);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 // app.delete("/common", async (req, res) => {
 //   try {
@@ -261,6 +246,22 @@ app.put("/common", async (req, res) => {
 //     res.status(500).json({ message: err.message });
 //   }
 // });
+
+app.put("/common", async (req, res) => {
+  try {
+    const id = "648bc201c6217f1d959e226f";
+    const data = await Common.findByIdAndUpdate(id, req.body);
+    if (!data) {
+      return res
+        .status(404)
+        .json({ message: `Common with ID: ${id} not found in database` });
+    }
+    const updatedData = await Common.findById(id);
+    res.status(200).json(updatedData);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 mongoose
   .connect(mongo_url)
