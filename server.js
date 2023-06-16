@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Product = require("./models/productModel");
 const Catalogue = require("./models/catalogueModel");
 const Banner = require("./models/bannerModel");
+const Common = require("./models/commonDataModel");
 const app = express();
 const mongo_url =
   "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority";
@@ -22,8 +23,8 @@ app.get("/guthib", (req, res) => {
 
 app.get("/products", async (req, res) => {
   try {
-    const allproduct = await Product.find({});
-    res.status(200).json(allproduct);
+    const data = await Product.find({});
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -32,8 +33,8 @@ app.get("/products", async (req, res) => {
 app.get("/product", async (req, res) => {
   try {
     const id = req.query.id;
-    const product = await Product.findById(id);
-    res.status(200).json(product);
+    const data = await Product.findById(id);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -41,8 +42,8 @@ app.get("/product", async (req, res) => {
 
 app.post("/product", async (req, res) => {
   try {
-    const product = await Product.create(req.body);
-    res.status(200).json(product);
+    const data = await Product.create(req.body);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -51,14 +52,14 @@ app.post("/product", async (req, res) => {
 app.put("/product", async (req, res) => {
   try {
     const id = req.query.id;
-    const product = await Product.findByIdAndUpdate(id, req.body);
-    if (!product) {
+    const data = await Product.findByIdAndUpdate(id, req.body);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Product with ID: ${id} not found in database` });
     }
-    const updatedProduct = await Product.findById(id);
-    res.status(200).json(updatedProduct);
+    const updatedData = await Product.findById(id);
+    res.status(200).json(updatedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -67,13 +68,13 @@ app.put("/product", async (req, res) => {
 app.delete("/product", async (req, res) => {
   try {
     const id = req.query.id;
-    const product = await Product.findByIdAndDelete(id);
-    if (!product) {
+    const data = await Product.findByIdAndDelete(id);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Product with ID: ${id} not found in database` });
     }
-    res.status(200).json(product);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -83,8 +84,8 @@ app.delete("/product", async (req, res) => {
 
 app.get("/catalogues", async (req, res) => {
   try {
-    const allcatalogue = await Catalogue.find({});
-    res.status(200).json(allcatalogue);
+    const data = await Catalogue.find({});
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -93,8 +94,8 @@ app.get("/catalogues", async (req, res) => {
 app.get("/catalogue", async (req, res) => {
   try {
     const id = req.query.id;
-    const catalogue = await Catalogue.findById(id);
-    res.status(200).json(catalogue);
+    const data = await Catalogue.findById(id);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -102,8 +103,8 @@ app.get("/catalogue", async (req, res) => {
 
 app.post("/catalogue", async (req, res) => {
   try {
-    const catalogue = await Catalogue.create(req.body);
-    res.status(200).json(catalogue);
+    const data = await Catalogue.create(req.body);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -112,14 +113,14 @@ app.post("/catalogue", async (req, res) => {
 app.put("/catalogue", async (req, res) => {
   try {
     const id = req.query.id;
-    const catalogue = await Catalogue.findByIdAndUpdate(id, req.body);
-    if (!catalogue) {
+    const data = await Catalogue.findByIdAndUpdate(id, req.body);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Catalogue with ID: ${id} not found in database` });
     }
-    const updatedCatalogue = await Catalogue.findById(id);
-    res.status(200).json(updatedCatalogue);
+    const updatedData = await Catalogue.findById(id);
+    res.status(200).json(updatedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -128,13 +129,13 @@ app.put("/catalogue", async (req, res) => {
 app.delete("/catalogue", async (req, res) => {
   try {
     const id = req.query.id;
-    const catalogue = await Catalogue.findByIdAndDelete(id);
-    if (!catalogue) {
+    const data = await Catalogue.findByIdAndDelete(id);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Catalogue with ID: ${id} not found in database` });
     }
-    res.status(200).json(catalogue);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -144,8 +145,8 @@ app.delete("/catalogue", async (req, res) => {
 
 app.get("/banners", async (req, res) => {
   try {
-    const allbanner = await Banner.find({});
-    res.status(200).json(allbanner);
+    const data = await Banner.find({});
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -154,8 +155,8 @@ app.get("/banners", async (req, res) => {
 app.get("/banner", async (req, res) => {
   try {
     const id = req.query.id;
-    const banner = await Banner.findById(id);
-    res.status(200).json(banner);
+    const data = await Banner.findById(id);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -163,8 +164,8 @@ app.get("/banner", async (req, res) => {
 
 app.post("/banner", async (req, res) => {
   try {
-    const banner = await Banner.create(req.body);
-    res.status(200).json(banner);
+    const data = await Banner.create(req.body);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -173,14 +174,14 @@ app.post("/banner", async (req, res) => {
 app.put("/banner", async (req, res) => {
   try {
     const id = req.query.id;
-    const banner = await Banner.findByIdAndUpdate(id, req.body);
-    if (!banner) {
+    const data = await Banner.findByIdAndUpdate(id, req.body);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Banner with ID: ${id} not found in database` });
     }
-    const updatedBanner = await Banner.findById(id);
-    res.status(200).json(updatedBanner);
+    const updatedData = await Banner.findById(id);
+    res.status(200).json(updatedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -189,17 +190,77 @@ app.put("/banner", async (req, res) => {
 app.delete("/banner", async (req, res) => {
   try {
     const id = req.query.id;
-    const banner = await Banner.findByIdAndDelete(id);
-    if (!banner) {
+    const data = await Banner.findByIdAndDelete(id);
+    if (!data) {
       return res
         .status(404)
         .json({ message: `Banner with ID: ${id} not found in database` });
     }
-    res.status(200).json(banner);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+//Common Data API
+// app.get("/commons", async (req, res) => {
+//   try {
+//     const data = await Common.find({});
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+app.get("/common", async (req, res) => {
+  try {
+    const id = req.query.id;
+    const data = await Common.findById(id);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// app.post("/common", async (req, res) => {
+//   try {
+//     const data = await Common.create(req.body);
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+app.put("/common", async (req, res) => {
+  try {
+    const id = req.query.id;
+    const data = await Common.findByIdAndUpdate(id, req.body);
+    if (!data) {
+      return res
+        .status(404)
+        .json({ message: `Common with ID: ${id} not found in database` });
+    }
+    const updatedData = await Common.findById(id);
+    res.status(200).json(updatedData);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// app.delete("/common", async (req, res) => {
+//   try {
+//     const id = req.query.id;
+//     const data = await Common.findByIdAndDelete(id);
+//     if (!data) {
+//       return res
+//         .status(404)
+//         .json({ message: `Common with ID: ${id} not found in database` });
+//     }
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 mongoose
   .connect(mongo_url)
