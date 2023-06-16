@@ -222,14 +222,14 @@ app.get("/common", async (req, res) => {
   }
 });
 
-// app.post("/common", async (req, res) => {
-//   try {
-//     const data = await Common.create(req.body);
-//     res.status(200).json(data);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// });
+app.post("/common", async (req, res) => {
+  try {
+    const data = await Common.create(req.body);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 app.put("/common", async (req, res) => {
   try {
