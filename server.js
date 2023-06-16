@@ -103,35 +103,41 @@ app.get("/catalogue", async (req, res) => {
 
 app.post("/catalogue", async (req, res) => {
   try {
-    const data = await Catalogue.create(req.body);
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-app.post("/catalogue-multi", async (req, res) => {
-  try {
-    const data = await Catalogue.insertMany(req.body);
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-app.post("/catalogue-test", async (req, res) => {
-  try {
+    var data;
     if (req.body.length) {
-      res.send("insert many");
+      data = await Catalogue.insertMany(req.body);
     } else {
-      res.send("satu doang");
+      data = await Catalogue.create(req.body);
     }
-    // const data = await Catalogue.insertMany(req.body);
-    // res.status(200).json(data);
+    // const data = await Catalogue.create(req.body);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+// app.post("/catalogue-multi", async (req, res) => {
+//   try {
+//     const data = await Catalogue.insertMany(req.body);
+//     res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+// app.post("/catalogue-test", async (req, res) => {
+//   try {
+//     if (req.body.length) {
+//       res.send("insert many");
+//     } else {
+//       res.send("satu doang");
+//     }
+//     // const data = await Catalogue.insertMany(req.body);
+//     // res.status(200).json(data);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 app.put("/catalogue", async (req, res) => {
   try {
