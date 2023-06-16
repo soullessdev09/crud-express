@@ -163,17 +163,8 @@ app.delete("/banner", async (req, res) => {
 
 app.get("/common", async (req, res) => {
   try {
-    const id = "648bc201c6217f1d959e226f";
+    const id = "648c247ff1aef9ea4ef486c4";
     const data = await Common.findById(id);
-    res.status(200).json(data);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-app.post("/common", async (req, res) => {
-  try {
-    const data = await Common.create(req.body);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -182,7 +173,7 @@ app.post("/common", async (req, res) => {
 
 app.put("/common", async (req, res) => {
   try {
-    const id = "648bc201c6217f1d959e226f";
+    const id = "648c247ff1aef9ea4ef486c4";
     const data = await Common.findByIdAndUpdate(id, req.body);
     if (!data) {
       return res
