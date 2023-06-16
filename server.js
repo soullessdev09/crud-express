@@ -119,6 +119,20 @@ app.post("/catalogue-multi", async (req, res) => {
   }
 });
 
+app.post("/catalogue-test", async (req, res) => {
+  try {
+    if (req.body.length !== 0) {
+      res.send("insert many");
+    } else {
+      res.send("satu doang");
+    }
+    // const data = await Catalogue.insertMany(req.body);
+    // res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 app.put("/catalogue", async (req, res) => {
   try {
     const id = req.query.id;
