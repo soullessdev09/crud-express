@@ -4,11 +4,13 @@ const Product = require("./models/productModel");
 const Catalogue = require("./models/catalogueModel");
 const Banner = require("./models/bannerModel");
 const Common = require("./models/commonDataModel");
+const cors = require("cors");
 const app = express();
 const mongo_url =
   "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority";
 
 app.use(express.json());
+app.use(cors());
 // app.use(express.urlencoded({extended: false})) //to use form data
 
 app.get("/", (req, res) => {
