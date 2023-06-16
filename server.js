@@ -307,8 +307,8 @@ mongoose
   .connect(mongo_url)
   .then(() => {
     console.log("connected to mongo db");
-    app.listen(3000, () => {
-      console.log("Node api is running, on port 3000");
+    app.listen(8000, () => {
+      console.log("Node api is running, on port 8000");
     });
   })
   .catch((err) => {

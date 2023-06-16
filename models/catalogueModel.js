@@ -12,6 +12,10 @@ const CatalogueSchema = new Schema(
       type: String,
       require: false,
     },
+    price: {
+      type: String,
+      require: false,
+    },
     pic: {
       type: String,
       require: false,
