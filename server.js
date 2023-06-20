@@ -27,7 +27,13 @@ app.get("/guthib", (req, res) => {
 app.get("/catalogues", async (req, res) => {
   try {
     const data = await Catalogue.find({});
-    res.status(200).json(data);
+    const categoryOrder = ["Electronic", "HP", "Home Appliance", "Furniture"];
+    const sortedData = data.sort((a, b) => {
+      const categoryA = categoryOrder.indexOf(a.category);
+      const categoryB = categoryOrder.indexOf(b.category);
+      return categoryA - categoryB;
+    });
+    res.status(200).json(sortedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
