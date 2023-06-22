@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Catalogue = require("./models/catalogueModel");
 const Banner = require("./models/bannerModel");
 const Common = require("./models/commonDataModel");
+const Article = require("./models/articleModel");
 const cors = require("cors");
 const app = express();
 const mongo_url =
@@ -43,7 +44,7 @@ app.get("/catalogues", async (req, res) => {
       const categoryB = categoryOrder.indexOf(b.category);
       return categoryA - categoryB;
     });
-    res.status(200).json(data);
+    res.status(200).json(sortedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -199,6 +200,62 @@ app.put("/common", async (req, res) => {
     }
     const updatedData = await Common.findById(id);
     res.status(200).json(updatedData);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+//Article API
+
+app.get("articles", async (req, res) => {
+  try {
+    const data = await Article.find({});
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get("article", async (req, res) => {
+  try {
+    const id = req.query.id;
+    const data = await Article.findById(id);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.post("article", async (req, res) => {
+  try {
+    const data = await Article.create(req.body);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.put("article", async (req, res) => {
+  try {
+    const id = req.query.id;
+    const data = await Article.findByIdAndUpdate(id, req.body);
+    if (!data) {
+      return res
+        .status(404)
+        .json({ message: `Article with ${id}, not found in database` });
+    }
+    const updatedData = await Article.findById(id);
+    res.status(200).json(updatedData);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.delete("article", async (req, res) => {
+  try {
+    const id = req.query.id;
+    const data = await Article.findByIdAndDelete(id);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
