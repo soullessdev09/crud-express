@@ -6,6 +6,7 @@ const Common = require("./models/commonDataModel");
 const Article = require("./models/articleModel");
 const cors = require("cors");
 const app = express();
+const port = 8000;
 const mongo_url =
   "mongodb+srv://kreduit:XDMgV9rww96wiKSH@cluster0.adkgvov.mongodb.net/?retryWrites=true&w=majority"; //url kreduit
 // const mongo_url =
@@ -64,6 +65,34 @@ app.post("/catalogue/filter", async (req, res) => {
   try {
     const data = await Catalogue.find(req.body);
     res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.post("/catalogue/search", async (req, res) => {
+  try {
+    const data = await Catalogue.find({});
+    const categoryOrder = [
+      "Electronic",
+      "HP",
+      "Home Appliance",
+      "Furniture",
+      "Laptop",
+      "Tablet",
+      "Smart Watch",
+      "Earbuds",
+      "",
+    ];
+    const sortedData = data.sort((a, b) => {
+      const categoryA = categoryOrder.indexOf(a.category);
+      const categoryB = categoryOrder.indexOf(b.category);
+      return categoryA - categoryB;
+    });
+    const searchResult = sortedData.filter((item) =>
+      item.name.toLowerCase().includes(req.body.search.toLowerCase())
+    );
+    res.status(200).json(searchResult);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -265,8 +294,8 @@ mongoose
   .connect(mongo_url)
   .then(() => {
     console.log("connected to mongo db");
-    app.listen(8000, () => {
-      console.log("Node api is running, on port 8000");
+    app.listen(port, () => {
+      console.log(`Node api is running, on port ${port}`);
     });
   })
   .catch((err) => {
