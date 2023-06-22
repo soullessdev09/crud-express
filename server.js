@@ -28,6 +28,8 @@ app.get("/guthib", (req, res) => {
 
 app.get("/catalogues", async (req, res) => {
   try {
+    const page = req.query.page;
+    const limit = req.query.limit;
     const data = await Catalogue.find({});
     const categoryOrder = [
       "Electronic",
@@ -45,7 +47,11 @@ app.get("/catalogues", async (req, res) => {
       const categoryB = categoryOrder.indexOf(b.category);
       return categoryA - categoryB;
     });
-    res.status(200).json(sortedData);
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const pagedData = sortedData.slice(startIndex, endIndex);
+    const usedData = page && limit ? pagedData : sortedData;
+    res.status(200).json(usedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
