@@ -60,6 +60,10 @@ const CatalogueSchema = new Schema(
       type: String,
       require: false,
     },
+    z1x3: {
+      type: String,
+      require: false,
+    },
     z1x6: {
       type: String,
       require: false,
@@ -76,6 +80,10 @@ const CatalogueSchema = new Schema(
       type: String,
       require: false,
     },
+    z3x3: {
+      type: String,
+      require: false,
+    },
     z3x6: {
       type: String,
       require: false,
@@ -89,6 +97,10 @@ const CatalogueSchema = new Schema(
       require: false,
     },
     z3x18: {
+      type: String,
+      require: false,
+    },
+    z4x3: {
       type: String,
       require: false,
     },
