@@ -9,10 +9,10 @@ const formidable = require("formidable");
 const ftp = require("ftp");
 const app = express();
 const port = 8000;
-const mongo_url =
-  "mongodb+srv://kreduit:XDMgV9rww96wiKSH@cluster0.adkgvov.mongodb.net/?retryWrites=true&w=majority"; //url kreduit
 // const mongo_url =
-//   "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority"; //url nabil
+//   "mongodb+srv://kreduit:XDMgV9rww96wiKSH@cluster0.adkgvov.mongodb.net/?retryWrites=true&w=majority"; //url kreduit
+const mongo_url =
+  "mongodb+srv://nerogama93:2ifA2s7NusdBmc9k@cluster0.xkuwbhh.mongodb.net/Node-API?retryWrites=true&w=majority"; //url nabil
 
 // FTP server credentials
 const ftpConfig = {
@@ -35,52 +35,52 @@ app.get("/guthib", (req, res) => {
 });
 
 // POST IMG
-app.post("/upload", (req, res) => {
-  const form = new formidable.IncomingForm();
+// app.post("/upload", (req, res) => {
+//   const form = new formidable.IncomingForm();
 
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      console.error("Error parsing form:", err);
-      res.status(500).send("Error parsing form");
-      return;
-    }
+//   form.parse(req, (err, fields, files) => {
+//     if (err) {
+//       console.error("Error parsing form:", err);
+//       res.status(500).send("Error parsing form");
+//       return;
+//     }
 
-    const ftpClient = new ftp();
+//     const ftpClient = new ftp();
 
-    // Connect to the FTP server
-    ftpClient.connect(ftpConfig);
+//     // Connect to the FTP server
+//     ftpClient.connect(ftpConfig);
 
-    // FTP client event handlers
-    ftpClient.on("ready", () => {
-      console.log("FTP client connected");
+//     // FTP client event handlers
+//     ftpClient.on("ready", () => {
+//       console.log("FTP client connected");
 
-      // Upload the file to the FTP server
-      const sourcePath = files.image[0].filepath;
-      const destinationPath =
-        "/home/userftp/" + files.image[0].originalFilename;
+//       // Upload the file to the FTP server
+//       const sourcePath = files.image[0].filepath;
+//       const destinationPath =
+//         "/home/userftp/" + files.image[0].originalFilename;
 
-      ftpClient.put(sourcePath, destinationPath, (uploadErr) => {
-        if (uploadErr) {
-          console.error("Error uploading file:", uploadErr);
-          res.status(500).send("Error uploading file");
-        } else {
-          console.log("File uploaded successfully");
-          res.status(200).json({
-            url_img: `https://katalog.kreduit.com${destinationPath}`,
-          });
-        }
+//       ftpClient.put(sourcePath, destinationPath, (uploadErr) => {
+//         if (uploadErr) {
+//           console.error("Error uploading file:", uploadErr);
+//           res.status(500).send("Error uploading file");
+//         } else {
+//           console.log("File uploaded successfully");
+//           res.status(200).json({
+//             url_img: `https://katalog.kreduit.com${destinationPath}`,
+//           });
+//         }
 
-        // Close the FTP connection
-        ftpClient.end();
-      });
-    });
+//         // Close the FTP connection
+//         ftpClient.end();
+//       });
+//     });
 
-    ftpClient.on("error", (err) => {
-      console.error("FTP client error:", err);
-      res.status(500).send("FTP client error");
-    });
-  });
-});
+//     ftpClient.on("error", (err) => {
+//       console.error("FTP client error:", err);
+//       res.status(500).send("FTP client error");
+//     });
+//   });
+// });
 
 // Define an Express route to upload an image to the FTP server
 // app.post("/upload", (req, res) => {
@@ -197,6 +197,7 @@ app.get("/catalogues", async (req, res) => {
     const limit = req.query.limit;
     const data = await Catalogue.find({});
     const categoryOrder = [
+      "Emas Batang",
       "Electronic",
       "HP",
       "Home Appliance",
@@ -297,6 +298,26 @@ app.put("/catalogue", async (req, res) => {
     res.status(200).json(updatedData);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+app.put("/catalogue/bulk", async (req, res) => {
+  try {
+    const bulkEditData = req.body; // Assuming you send the bulk edit data as an array of objects
+
+    const updatedProducts = await Promise.all(
+      bulkEditData.map(async (item) => {
+        const updatedProduct = await Catalogue.findOneAndUpdate(
+          { name: item.name }, // Assuming "name" is a unique identifier for your products
+          { $set: item },
+          { new: true }
+        );
+        return updatedProduct;
+      })
+    );
+    res.status(200).json({ message: "Bulk edit successful", updatedProducts });
+  } catch (error) {
+    res.status(500).json({ message: err });
   }
 });
 
